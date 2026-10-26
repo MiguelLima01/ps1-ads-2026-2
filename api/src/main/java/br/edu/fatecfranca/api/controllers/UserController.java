@@ -17,6 +17,13 @@ import br.edu.fatecfranca.api.dtos.UserRequest;
 import br.edu.fatecfranca.api.entities.User;
 import br.edu.fatecfranca.api.services.UserService;
 
+import br.edu.fatecfranca.api.dtos.UserResponse;
+
+import jakarta.validation.Valid;
+
+import br.edu.fatecfranca.api.dtos.LoginRequest;
+import br.edu.fatecfranca.api.dtos.UserResponse;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -27,29 +34,49 @@ public class UserController {
         this.service = service;
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<UserResponse> login(
+            @Valid @RequestBody LoginRequest request) {
+
+        return service.authenticate(request)
+                .map(UserResponse::new)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .build());
+    }
+    
+    // (...código existente...)
+
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody UserRequest request) {
+    public ResponseEntity<UserResponse> create(
+            @RequestBody UserRequest request) {
+
         User savedUser = service.create(request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(savedUser);
+                .body(new UserResponse(savedUser));
     }
 
     @GetMapping
-    public List<User> findAll() {
-        return service.findAll();
+    public List<UserResponse> findAll() {
+        return service.findAll()
+                .stream()
+                .map(UserResponse::new)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
+    public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         return service.findById(id)
+                .map(UserResponse::new)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(
+    public ResponseEntity<UserResponse> update(
             @PathVariable Long id,
             @RequestBody UserRequest request) {
 
@@ -57,7 +84,9 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(service.update(id, request));
+        User updatedUser = service.update(id, request);
+
+        return ResponseEntity.ok(new UserResponse(updatedUser));
     }
 
     @DeleteMapping("/{id}")
