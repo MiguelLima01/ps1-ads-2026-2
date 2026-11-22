@@ -13,54 +13,52 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.fatecfranca.api.dtos.CarRequest;
 import br.edu.fatecfranca.api.entities.Car;
-import br.edu.fatecfranca.api.repositories.CarRepository;
+import br.edu.fatecfranca.api.services.CarService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/cars")
 public class CarController {
 
-    private final CarRepository carRepository;
+    private final CarService service;
 
-    public CarController(CarRepository carRepository) {
-        this.carRepository = carRepository;
+    public CarController(CarService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public ResponseEntity<Car> create(@Valid @RequestBody CarRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 
     @GetMapping
     public List<Car> findAll() {
-        return carRepository.findAll();
+        return service.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Car> findById(@PathVariable Long id) {
-        return carRepository.findById(id)
+        return service.findById(id)
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public ResponseEntity<Car> create(@RequestBody Car car) {
-        Car savedCar = carRepository.save(car);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCar);
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Car> update(@PathVariable Long id, @RequestBody Car car) {
-        if (!carRepository.existsById(id)) {
+    public ResponseEntity<Car> update(@PathVariable Long id, @Valid @RequestBody CarRequest request) {
+        if (!service.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
-
-        car.setId(id);
-        return ResponseEntity.ok(carRepository.save(car));
+        return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!carRepository.existsById(id)) {
+        if (!service.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
-
-        carRepository.deleteById(id);
+        service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }

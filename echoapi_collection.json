@@ -1,0 +1,431 @@
+{
+  "info": {
+    "name": "ps1-ads-2026-2 (FATEC Franca)",
+    "description": "Coleção de testes para a API do projeto PS1 ADS 2026-2 (Atualizada com aula de 16/11)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01. Geral",
+      "item": [
+        {
+          "name": "GET Raiz (Hello)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8888/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": [""]
+            }
+          }
+        },
+        {
+          "name": "GET Teste",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8888/test",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["test"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02. Autenticação e Usuários",
+      "item": [
+        {
+          "name": "POST Cadastrar Usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Miguel Lima dos Reis\",\n  \"username\": \"miguellima\",\n  \"email\": \"miguellimareis01@gmail.com\",\n  \"password\": \"senhaForte123\",\n  \"isAdmin\": true\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "http://localhost:8888/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "POST Login (Gerar Token JWT)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usernameOrEmail\": \"miguellima\",\n  \"password\": \"senhaForte123\"\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "http://localhost:8888/users/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["users", "login"]
+            }
+          }
+        },
+        {
+          "name": "GET Listar Usuários",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8888/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "GET Buscar Usuário por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8888/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["users", "1"]
+            }
+          }
+        },
+        {
+          "name": "PUT Atualizar Usuário",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Miguel Lima dos Reis\",\n  \"username\": \"miguellima\",\n  \"email\": \"miguellimareis01@gmail.com\",\n  \"password\": \"novaSenha123\",\n  \"isAdmin\": true\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "http://localhost:8888/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["users", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03. Clientes (Customer)",
+      "item": [
+        {
+          "name": "POST Cadastrar Cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Miguel Lima dos Reis\",\n  \"identDocument\": \"52998224725\",\n  \"birthDate\": \"2000-05-15\",\n  \"streetName\": \"Rua Voluntários da Franca\",\n  \"houseNumber\": \"1500\",\n  \"complements\": \"Apto 34\",\n  \"district\": \"Centro\",\n  \"municipality\": \"Franca\",\n  \"state\": \"SP\",\n  \"phone\": \"16991234567\",\n  \"email\": \"miguellimareis01@gmail.com\"\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "http://localhost:8888/customers",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["customers"]
+            }
+          }
+        },
+        {
+          "name": "GET Listar Clientes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8888/customers",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["customers"]
+            }
+          }
+        },
+        {
+          "name": "GET Buscar Cliente por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8888/customers/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["customers", "1"]
+            }
+          }
+        },
+        {
+          "name": "PUT Atualizar Cliente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Miguel Lima dos Reis\",\n  \"identDocument\": \"52998224725\",\n  \"birthDate\": \"2000-05-15\",\n  \"streetName\": \"Avenida Brasil\",\n  \"houseNumber\": \"1800\",\n  \"complements\": \"Bloco B\",\n  \"district\": \"Centro\",\n  \"municipality\": \"Franca\",\n  \"state\": \"SP\",\n  \"phone\": \"16991234567\",\n  \"email\": \"miguellimareis01@gmail.com\"\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "http://localhost:8888/customers/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["customers", "1"]
+            }
+          }
+        },
+        {
+          "name": "DELETE Excluir Cliente",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8888/customers/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["customers", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04. Carros (Car - T1)",
+      "item": [
+        {
+          "name": "POST Cadastrar Carro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"brand\": \"Honda\",\n  \"model\": \"Civic Touring\",\n  \"color\": \"Preto\",\n  \"yearManufacture\": 2022,\n  \"imported\": false,\n  \"plates\": \"DEF4G56\",\n  \"sellingDate\": \"2026-09-18\",\n  \"sellingPrice\": 99500.00,\n  \"customerId\": 1\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "http://localhost:8888/cars",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["cars"]
+            }
+          }
+        },
+        {
+          "name": "GET Listar Carros",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8888/cars",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["cars"]
+            }
+          }
+        },
+        {
+          "name": "GET Buscar Carro por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8888/cars/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["cars", "1"]
+            }
+          }
+        },
+        {
+          "name": "PUT Atualizar Carro",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"brand\": \"Honda\",\n  \"model\": \"Civic Touring\",\n  \"color\": \"Branco\",\n  \"yearManufacture\": 2022,\n  \"imported\": false,\n  \"plates\": \"DEF4G56\",\n  \"sellingDate\": \"2026-10-01\",\n  \"sellingPrice\": 95000.00,\n  \"customerId\": 1\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "http://localhost:8888/cars/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["cars", "1"]
+            }
+          }
+        },
+        {
+          "name": "DELETE Excluir Carro",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8888/cars/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["cars", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05. Testes Cadeia de Responsabilidade (16/11)",
+      "item": [
+        {
+          "name": "POST 1. Criar Cliente Válido (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Marina Alves Ribeiro\",\n  \"identDocument\": \"529.982.247-25\",\n  \"birthDate\": \"1994-08-17\",\n  \"streetName\": \"Rua das Acácias\",\n  \"houseNumber\": \"245\",\n  \"complements\": \"Apartamento 12\",\n  \"district\": \"Centro\",\n  \"municipality\": \"Franca\",\n  \"state\": \"SP\",\n  \"phone\": \"(16) 99999-0123\",\n  \"email\": \"marina.ribeiro@example.com\"\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "http://localhost:8888/customers",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["customers"]
+            }
+          }
+        },
+        {
+          "name": "POST 2. Testar Documento Duplicado (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Marina Alves Ribeiro\",\n  \"identDocument\": \"529.982.247-25\",\n  \"birthDate\": \"1994-08-17\",\n  \"streetName\": \"Rua das Acácias\",\n  \"houseNumber\": \"245\",\n  \"complements\": \"Apartamento 12\",\n  \"district\": \"Centro\",\n  \"municipality\": \"Franca\",\n  \"state\": \"SP\",\n  \"phone\": \"(16) 99999-0123\",\n  \"email\": \"marina.ribeiro@example.com\"\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "http://localhost:8888/customers",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["customers"]
+            }
+          }
+        },
+        {
+          "name": "POST 3. Testar UF Inexistente (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Marina Alves Ribeiro\",\n  \"identDocument\": \"529.982.247-25\",\n  \"birthDate\": \"1994-08-17\",\n  \"streetName\": \"Rua das Acácias\",\n  \"houseNumber\": \"245\",\n  \"complements\": \"Apartamento 12\",\n  \"district\": \"Centro\",\n  \"municipality\": \"Franca\",\n  \"state\": \"XY\",\n  \"phone\": \"(16) 99999-0123\",\n  \"email\": \"marina.ribeiro@example.com\"\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "http://localhost:8888/customers",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["customers"]
+            }
+          }
+        },
+        {
+          "name": "POST 4. Testar E-mail Duplicado (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Marina Alves Ribeiro\",\n  \"identDocument\": \"188.035.428-41\",\n  \"birthDate\": \"1994-08-17\",\n  \"streetName\": \"Rua das Acácias\",\n  \"houseNumber\": \"245\",\n  \"complements\": \"Apartamento 12\",\n  \"district\": \"Centro\",\n  \"municipality\": \"Franca\",\n  \"state\": \"SP\",\n  \"phone\": \"(16) 99999-0123\",\n  \"email\": \"marina.ribeiro@example.com\"\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "http://localhost:8888/customers",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8888",
+              "path": ["customers"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
